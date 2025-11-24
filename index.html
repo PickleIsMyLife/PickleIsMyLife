@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Piace Azzurra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #FFFFFF, #F5F5F5);
+            font-family: 'Great Vibes', cursive;
+            min-height: 200vh;
+        }
+        #container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 90% 90%, 80% 80%, 70% 90%, 60% 80%, 50% 90%, 40% 80%, 30% 90%, 20% 80%, 10% 90%, 0% 80%);
+            transition: all 0.5s ease;
+        }
+        #container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        #text {
+            font-size: 4em;
+            color: #000000;
+            cursor: pointer;
+            text-shadow: 3px 3px 6px rgba(255,255,255,0.8);
+            letter-spacing: 2px;
+            transition: all 0.5s ease;
+            opacity: 1;
+            margin: 0;
+        }
+        #text:hover {
+            color: #333333;
+            transform: scale(1.05);
+            text-shadow: 4px 4px 8px rgba(255,255,255,0.9);
+        }
+        #italian-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5em;
+            color: #000000;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+        }
+        #bottom-text1, #bottom-text2 {
+            position: absolute;
+            bottom: 20px;
+            font-size: 1.5em;
+            color: #000000;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+            font-family: 'Great Vibes', cursive;
+        }
+        #bottom-text1 {
+            left: 20px;
+        }
+        #bottom-text2 {
+            right: 20px;
+        }
+        #scroll-text {
+            position: absolute;
+            top: 150vh;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2em;
+            color: #000000;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+            font-family: 'Great Vibes', cursive;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        #scroll-text.visible {
+            opacity: 1;
+        }
+        @media (max-width: 768px) {
+            #text {
+                font-size: 2.5em;
+            }
+            #italian-text {
+                font-size: 1.8em;
+            }
+            #bottom-text1, #bottom-text2 {
+                font-size: 1em;
+                bottom: 10px;
+            }
+            #bottom-text1 {
+                left: 10px;
+            }
+            #bottom-text2 {
+                right: 10px;
+            }
+            #scroll-text {
+                font-size: 1.5em;
+                top: 120vh;
+            }
+            #container {
+                padding: 20px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="text" onclick="changeText()">Mi piace Azzurra</div>
+    </div>
+    <div id="italian-text">Buona fortuna con il tema italiano</div>
+    <div id="bottom-text1">Mi piace Azzurra</div>
+    <div id="bottom-text2">Scritta Da Loris Garfagnioli</div>
+    <div id="scroll-text">Elisa + Lupo= amori</div>
+
+    <script>
+        let clickCount = 0;
+        const texts = [
+            'Mi piace Azzurra',
+            'Scritta Da Loris Garfagnioli'
+        ];
+
+        function changeText() {
+            const text = document.getElementById('text');
+            text.style.opacity = '0';
+            text.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                clickCount = (clickCount + 1) % texts.length;
+                text.innerText = texts[clickCount];
+                text.style.opacity = '1';
+                text.style.transform = 'scale(1)';
+            }, 500);
+        }
+
+        // Smooth scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(document.getElementById('scroll-text'));
+    </script>
+</body>
+</html>
